@@ -1,7 +1,7 @@
-.App {
-  display: flex;
+.header {
+  padding: 50px;
 }
 
-.roster {
-  width: 300px;
+.header h1 {
+  text-align: center;
 }

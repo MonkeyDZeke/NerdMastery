@@ -7,53 +7,43 @@ export const initialNerds: INerd[] = [
         rating: 1500,
         rd: 350,
         volatility: 0.6,
+        glicko: null,
+        level: 1,
     },
     {
         id: 'def',
         name: 'Kyle',
-        rating: 1500,
+        rating: 1900,
         rd: 350,
         volatility: 0.6,
+        glicko: null,
+        level: 100,
     },
     {
         id: 'ghi',
         name: 'Tom',
-        rating: 1500,
+        rating: 1200,
         rd: 350,
         volatility: 0.6,
+        glicko: null,
+        level: 10
     },
     {
         id: 'jkl',
         name: 'Merlyn',
-        rating: 1500,
+        rating: 1100,
         rd: 350,
         volatility: 0.6,
+        glicko: null,
+        level: 20,
     },
     {
         id: 'mno',
         name: 'John',
-        rating: 1500,
+        rating: 1000,
         rd: 350,
         volatility: 0.6,
+        glicko: null,
+        level: 50,
     },
 ]
-
-export const init = (initValues: INerd[]) => initValues
-
-export interface INerdAction {
-    type: 'UPDATE' | 'RESET'
-    payload: INerd
-}
-
-const reducer = (state: INerd[], action: INerdAction) => {
-    switch (action.type) {
-        case 'UPDATE':
-            return [...state.filter(nerd => nerd.id !== action.payload.id), action.payload]
-        case 'RESET':
-            return init(initialNerds)
-        default:
-            return state
-    }
-}
-
-export default reducer
