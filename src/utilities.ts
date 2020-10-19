@@ -24,9 +24,14 @@ export const submitPeriod = (nerds: INerd[], ratings: IRating[]): INerd[] => {
     const weightedEvaluators = nerds.sort((a, b) => a.rating > b.rating ? 1 : -1)
     const topEvaluator = weightedEvaluators[weightedEvaluators.length - 1]
     const bottomEvaluator = weightedEvaluators[0]
-    if (topEvaluator.rating === bottomEvaluator.rating) return Array(Math.ceil(Math.log2(evaluator.level))).fill([target.glicko, fakeOpponent, rating.rating > 0 ? 1 : 0])
-    const outcome = (rating.rating > 0 ? 0.5 : -0.5) + 0.5 * ((evaluator.rating - bottomEvaluator.rating) / (topEvaluator.rating - bottomEvaluator.rating))
-    return Array(Math.ceil(Math.log2(evaluator.level))).fill([target.glicko, fakeOpponent, outcome])
+    let matches = []
+    if (topEvaluator.rating === bottomEvaluator.rating) {
+      matches = Array(Math.ceil(Math.log2(evaluator.level)) + 1).fill([target.glicko, fakeOpponent, rating.rating > 0 ? 1 : 0])
+    } else {
+      const outcome = (rating.rating > 0 ? 0.5 : -0.5) + 0.5 * ((evaluator.rating - bottomEvaluator.rating) / (topEvaluator.rating - bottomEvaluator.rating))
+      matches = Array(Math.ceil(Math.log2(evaluator.level)) + 1).fill([target.glicko, fakeOpponent, outcome])
+    }
+    return matches
   }
 
   nerds.forEach(nerd => nerd.glicko = glicko.makePlayer(nerd.rating, nerd.rd, nerd.volatility))
@@ -44,6 +49,7 @@ export const submitPeriod = (nerds: INerd[], ratings: IRating[]): INerd[] => {
 
   glicko.updateRatings(matches)
   nerds.forEach(nerd => {
+    nerd.ratingShift = nerd.glicko!.getRating() - nerd.rating
     nerd.rating = nerd.glicko!.getRating()
     nerd.rd = nerd.glicko!.getRd()
     nerd.volatility = nerd.glicko!.getVol()

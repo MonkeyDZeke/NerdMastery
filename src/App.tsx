@@ -53,7 +53,7 @@ function App() {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={3} container spacing={1} direction="column">
-            {nerds.map(nerd => <Grid key={nerd.id} item xs><Nerd {...nerd} select={() => selectNerd(nerd.id)} /></Grid>)}
+            {nerds.sort((a, b) => a.rating < b.rating ? 1 : -1).map(nerd => <Grid key={nerd.id} item xs><Nerd {...nerd} select={() => selectNerd(nerd.id)} /></Grid>)}
           </Grid>
           <Grid item xs container spacing={3} direction="column" className={classes.selfStart}>
             <Workspace addRating={addRating} nerds={nerds} nerd={selectedNerd} />

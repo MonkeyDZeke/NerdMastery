@@ -17,6 +17,7 @@ export interface INerd {
     id: string
     name: string
     rating: number
+    ratingShift: number
     rd: number
     volatility: number
     glicko: IGlicko | null
