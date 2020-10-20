@@ -20,7 +20,7 @@ export const submitPeriod = (nerds: INerd[], ratings: IRating[]): INerd[] => {
   const glicko = new glicko2.Glicko2(settings)
 
   const weightedMatches = (evaluator: INerd, target: INerd, rating: IRating): IMatch[] => {
-    const fakeOpponent: IGlicko = glicko.makePlayer(target.rating + target.rd * rating.rating, target.rating, target.volatility)
+    const fakeOpponent: IGlicko = glicko.makePlayer(target.rating + target.rd * rating.rating, target.rd, target.volatility)
     const weightedEvaluators = nerds.sort((a, b) => a.rating > b.rating ? 1 : -1)
     const topEvaluator = weightedEvaluators[weightedEvaluators.length - 1]
     const bottomEvaluator = weightedEvaluators[0]
@@ -42,7 +42,7 @@ export const submitPeriod = (nerds: INerd[], ratings: IRating[]): INerd[] => {
       if (currentRatings.length) {
         return [...a2, ...currentRatings.reduce((a3: IMatch[], rating) => [...a3, ...weightedMatches(evaluator, target, rating)], [])]
       } else {
-        return [...a2, ...Array(Math.ceil(Math.log2(evaluator.level))).fill([target.glicko, target.glicko, 0.5])]
+        return [...a2, ...Array(Math.ceil(Math.log2(evaluator.level)) + 1).fill([target.glicko, target.glicko, 0.5])]
       }
     }, [])]
   }, [])

@@ -9,7 +9,7 @@ export const initialNerds: INerd[] = [
         rd: 350,
         volatility: 0.6,
         glicko: null,
-        level: 1,
+        level: 10,
     },
     {
         id: 'def',
@@ -19,7 +19,7 @@ export const initialNerds: INerd[] = [
         rd: 350,
         volatility: 0.6,
         glicko: null,
-        level: 1,
+        level: 100,
     },
     {
         id: 'ghi',
@@ -29,7 +29,7 @@ export const initialNerds: INerd[] = [
         rd: 350,
         volatility: 0.6,
         glicko: null,
-        level: 1
+        level: 50
     },
     {
         id: 'jkl',
@@ -39,7 +39,7 @@ export const initialNerds: INerd[] = [
         rd: 350,
         volatility: 0.6,
         glicko: null,
-        level: 1,
+        level: 50,
     },
     {
         id: 'mno',
@@ -49,6 +49,6 @@ export const initialNerds: INerd[] = [
         rd: 350,
         volatility: 0.6,
         glicko: null,
-        level: 1,
+        level: 50,
     },
 ]
