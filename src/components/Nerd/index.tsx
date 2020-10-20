@@ -30,14 +30,14 @@ interface IProps extends INerd {
   select: () => void
 }
 
-const Nerd: React.FC<IProps> = ({ name, rating, ratingShift, rd, volatility, select }: IProps) => {
+const Nerd: React.FC<IProps> = ({ name, level, rating, ratingShift, rd, volatility, select }: IProps) => {
   const classes = useStyles()
 
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="primary" gutterBottom>
-          {name}
+          {name}: {level}
         </Typography>
         <Typography className={classes.stat} color="secondary">
           Rating: {ratingShift !== 0 && <span className={ratingShift > 0 ? classes.posShift : classes.negShift}>{ratingShift}</span>}
