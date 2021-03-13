@@ -12,6 +12,15 @@ export interface IGlicko {
     getVol: () => number,
 }
 
+export interface ITrait {
+    rating: number
+    ratingShift: number
+    rd: number
+    volatility: number
+    glicko: IGlicko | null
+    boost: number // should be between 0.9 and 1.1
+}
+
 
 export interface INerd {
     id: string
@@ -22,6 +31,10 @@ export interface INerd {
     volatility: number
     glicko: IGlicko | null
     level: number
+    boost: number // should be between 0.9 and 1.1
+    traits: {
+        [key: string]: ITrait
+    }
 }
 
 export interface IRating {
@@ -30,4 +43,25 @@ export interface IRating {
     evaluatorName: string
     evaluatorId: string
     rating: number
+}
+
+export interface ITransaction {
+    evaluatorId: string
+    nerdId: string
+    boost: number // should be between 0.9 and 1.1
+    rating: number // should be between -1 and 1
+    trait: string
+}
+
+export interface ISession {
+    transactions: ITransaction[]
+    settings: {
+        tau: number
+        rpd: number
+        rating: number
+        rd: number
+        vol: number
+    }
+    traits: string[]
+    players: INerd[]
 }
