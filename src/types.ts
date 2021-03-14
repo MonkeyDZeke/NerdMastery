@@ -25,24 +25,11 @@ export interface ITrait {
 export interface INerd {
     id: string
     name: string
-    rating: number
-    ratingShift: number
-    rd: number
-    volatility: number
-    glicko: IGlicko | null
     level: number
     boost: number // should be between 0.9 and 1.1
     traits: {
         [key: string]: ITrait
     }
-}
-
-export interface IRating {
-    nerdName: string
-    nerdId: string
-    evaluatorName: string
-    evaluatorId: string
-    rating: number
 }
 
 export interface ITransaction {
