@@ -1,11 +1,15 @@
 import React from 'react'
+import { Callout } from '@blueprintjs/core'
 import './App.css'
+
+// reducer to update people details
 
 function App() {
 
   return (
     <div>
-      <h2>Welcome to NerdMastery</h2>
+      <Callout title="Welcome to the NerdMastery playtest">Select a set of evaluations for this session. When you are ready, click "Calculate Results" and see what happens!</Callout>
+
     </div>
   )
 }
