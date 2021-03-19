@@ -47,48 +47,59 @@ function App() {
       traits
     })
     setPlayers(results)
+    setEvaluations([])
+    console.log(results)
   }
 
   return (
     <div>
       <Callout title="Welcome to the NerdMastery playtest">Create a set of evaluations for this session. When you are ready, click "Calculate Results" and see what happens!</Callout>
-      <div>
+      <div className="section players">
         {players.map(player =>
-          <Card elevation={Elevation.ONE}>
-            <p>{player.name}</p>
+          <Card elevation={Elevation.ONE} className={'player'} key={player.id}>
+            <h5>{player.name}</h5>
+            {traits.map(t =>
+              <details key={t}>
+                <summary>{t}</summary>
+                <p><strong>Rating: </strong>{player.traits[t].rating}</p>
+                <p><strong>Rating Shift: </strong>{player.traits[t].ratingShift}</p>
+                <p><strong>Rating Deviation: </strong>{player.traits[t].rd}</p>
+                <p><strong>Volatility: </strong>{player.traits[t].volatility}</p>
+              </details>
+            )}
           </Card>
         )}
       </div>
-      <div>
+      <div className="section evaluate-form">
         <ControlGroup fill>
           <HTMLSelect
-            onChange={({ currentTarget: { value } }) => setEvaluator(evaluators.find(e => e.value === value)!)}
+            onChange={({ currentTarget: { value } }) => setEvaluator(value ? evaluators.find(e => e.value === value)! : { label: 'Select Evaluator', value: '' })}
             value={evaluator.value}
-            options={[{ label: 'Evaluator', value: '' }, ...evaluators]}
+            options={[{ label: 'Select Evaluator', value: '' }, ...evaluators]}
           />
           <HTMLSelect
-            onChange={({ currentTarget: { value } }) => setNerd(nerds.find(e => e.value === value)!)}
+            onChange={({ currentTarget: { value } }) => setNerd(value ? nerds.find(e => e.value === value)! : { label: 'Select Nerd', value: '' })}
             value={nerd.value}
-            options={[{ label: 'Nerd', value: '' }, ...nerds]}
+            options={[{ label: 'Select Nerd', value: '' }, ...nerds]}
           />
           <HTMLSelect
             onChange={({ currentTarget: { value } }) => setTrait(value)}
             value={trait}
-            options={traits}
+            options={[{ label: 'Select Trait', value: '' }, ...traits]}
           />
           <Slider max={1} min={-1} stepSize={0.2} value={rating} onChange={(n: number) => setRating(n)} labelStepSize={0.2} />
-          <Button onClick={addEvaluation} disabled={!evaluator.value || !nerd.value || !trait}>Add Evaluation</Button>
         </ControlGroup>
+        <Button onClick={addEvaluation} disabled={!evaluator.value || !nerd.value || !trait} fill>Add Evaluation</Button>
       </div>
-      <div>
+      <div className="section evaluations">
         {evaluations.map((e, i) =>
-          <Tag onRemove={() => setEvaluations([...evaluations.slice(0,i), ...evaluations.slice(i+1)])}>
+          <Tag key={e.evaluatorId + i} onRemove={() => setEvaluations([...evaluations.slice(0,i), ...evaluations.slice(i+1)])}>
             {`${players.find(p => p.id === e.evaluatorId)!.name} rates ${players.find(p => p.id === e.nerdId)!.name}'s ${e.trait} at ${e.rating}`}
           </Tag>
         )}
       </div>
-      <div>
-        <Button large onClick={submit} disabled={!evaluations.length}>Submit This Session of Evaluations!</Button>
+      <div className="section">
+        <Button large fill onClick={submit} disabled={!evaluations.length}>Calculate Results!</Button>
       </div>
     </div>
   )

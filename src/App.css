@@ -5,3 +5,27 @@
 .header h1 {
   text-align: center;
 }
+
+.section {
+  margin: 20px
+}
+
+.players {
+  display: flex;
+}
+
+.player {
+  margin: 10px;
+}
+
+.bp3-html-select {
+  width: 220px;
+}
+
+.bp3-slider {
+  margin: 0 20px;
+}
+
+.bp3-tag {
+  margin: 10px;
+}
