@@ -9,7 +9,7 @@ type IMatch = [
 
 const constrainBoost = (n: number) => Math.min(Math.max(n, 0.9), 1.1)
 
-export const calculateSession = ({ players, settings, transactions, traits }: ISession): INerd[] => {
+export const calculateSession = ({ players, settings, evaluations, traits }: ISession): INerd[] => {
   // set up glicko2
   const defaultSettings = {
     tau: 0.5,
@@ -38,7 +38,7 @@ export const calculateSession = ({ players, settings, transactions, traits }: IS
 
   // create matches
   let matches: IMatch[] = []
-  transactions.forEach(({ evaluatorId, nerdId, trait, boost, rating }) => {
+  evaluations.forEach(({ evaluatorId, nerdId, trait, boost, rating }) => {
     const evaluator = players.find(player => player.id === evaluatorId)
     const nerd = players.find(player => player.id === nerdId)
     if (!evaluator || !nerd) return

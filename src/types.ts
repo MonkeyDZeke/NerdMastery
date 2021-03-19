@@ -32,7 +32,7 @@ export interface INerd {
     }
 }
 
-export interface ITransaction {
+export interface IEvaluation {
     evaluatorId: string
     nerdId: string
     boost: number // should be between 0.9 and 1.1
@@ -41,13 +41,13 @@ export interface ITransaction {
 }
 
 export interface ISession {
-    transactions: ITransaction[]
+    evaluations: IEvaluation[]
     settings: {
-        tau: number
-        rpd: number
-        rating: number
-        rd: number
-        vol: number
+        tau?: number
+        rpd?: number
+        rating?: number
+        rd?: number
+        vol?: number
     }
     traits: string[]
     players: INerd[]

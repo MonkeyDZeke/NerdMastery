@@ -9,7 +9,7 @@ export const traits = [
   'constitution'
 ]
 
-export const players: INerd[] = [
+export const people: INerd[] = [
   {
     id: 'potter',
     name: 'Harry Potter',
