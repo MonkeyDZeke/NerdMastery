@@ -10,12 +10,29 @@
   margin: 20px
 }
 
-.players {
+/* .players {
   display: flex;
-}
+} */
 
 .player {
-  margin: 10px;
+  position: relative;
+  display: flex;
+  margin: 10px 0;
+  padding: 20px 20px 50px 50px;
+  background-color: aliceblue;
+}
+
+.player h2 {
+  position: absolute;
+  top: 0;
+  left: 35px;
+  transform-origin: 0 0;
+  transform: rotate(90deg);
+}
+
+.player h3 {
+  font-size: 150%;
+  margin-top: 0;
 }
 
 .bp3-html-select {

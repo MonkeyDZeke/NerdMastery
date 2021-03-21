@@ -54,22 +54,6 @@ function App() {
   return (
     <div>
       <Callout title="Welcome to the NerdMastery playtest">Create a set of evaluations for this session. When you are ready, click "Calculate Results" and see what happens!</Callout>
-      <div className="section players">
-        {players.map(player =>
-          <Card elevation={Elevation.ONE} className={'player'} key={player.id}>
-            <h5>{player.name}</h5>
-            {traits.map(t =>
-              <details key={t}>
-                <summary>{t}</summary>
-                <p><strong>Rating: </strong>{player.traits[t].rating}</p>
-                <p><strong>Rating Shift: </strong>{player.traits[t].ratingShift}</p>
-                <p><strong>Rating Deviation: </strong>{player.traits[t].rd}</p>
-                <p><strong>Volatility: </strong>{player.traits[t].volatility}</p>
-              </details>
-            )}
-          </Card>
-        )}
-      </div>
       <div className="section evaluate-form">
         <ControlGroup fill>
           <HTMLSelect
@@ -100,6 +84,22 @@ function App() {
       </div>
       <div className="section">
         <Button large fill onClick={submit} disabled={!evaluations.length}>Calculate Results!</Button>
+      </div>
+      <div className="section players">
+        {players.map(player =>
+          <Card elevation={Elevation.ONE} className={'player'} key={player.id}>
+            <h2>{player.name} <i>lvl: {player.level}</i></h2>
+            {traits.map(t =>
+              <Card key={t}>
+                <h3>{t}</h3>
+                <p><strong>Rating: </strong>{player.traits[t].rating}</p>
+                <p><strong>Rating Shift: </strong>{player.traits[t].ratingShift}</p>
+                <p><strong>Rating Deviation: </strong>{player.traits[t].rd}</p>
+                <p><strong>Volatility: </strong>{player.traits[t].volatility}</p>
+              </Card>
+            )}
+          </Card>
+        )}
       </div>
     </div>
   )
