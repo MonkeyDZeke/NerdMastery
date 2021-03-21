@@ -7,18 +7,20 @@
 }
 
 .section {
-  margin: 20px
+  margin: 75px 0;
 }
 
-/* .players {
-  display: flex;
-} */
+.main {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 .player {
   position: relative;
   display: flex;
   margin: 10px 0;
-  padding: 20px 20px 50px 50px;
+  padding-left: 50px;
   background-color: aliceblue;
 }
 
@@ -33,6 +35,18 @@
 .player h3 {
   font-size: 150%;
   margin-top: 0;
+}
+
+.trait {
+  text-align: center;
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
 }
 
 .bp3-html-select {

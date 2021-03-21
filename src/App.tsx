@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
-import { Button, Callout, Card, ControlGroup, Elevation, HTMLSelect, Slider, Tag } from '@blueprintjs/core'
+import { Button, Callout, Card, ControlGroup, Elevation, HTMLSelect, Intent, Slider, Tag } from '@blueprintjs/core'
 import './App.css'
 import { people, traits } from './data'
 import { IEvaluation } from './types'
 import { calculateSession } from './utilities'
 
-// reducer to update people details
+
+const formatShift = (n: number) => {
+  if (n > 0) return <i className="positive"> / +{n}</i>
+  if (n < 0) return <i className="negative"> / -{n}</i>
+  return <i> / {n}</i>
+}
 
 interface IOption {
   label: string
@@ -16,8 +21,8 @@ function App() {
   const [players, setPlayers] = useState(people)
   const playerOptions = players.map(player => ({ label: player.name, value: player.id }))
 
-  const [evaluator, setEvaluator] = useState<IOption>({ label: 'Select Evaluator', value: '' })
-  const [nerd, setNerd] = useState<IOption>({ label: 'Select Nerd', value: '' })
+  const [evaluator, setEvaluator] = useState<IOption>({ label: 'Evaluator', value: '' })
+  const [nerd, setNerd] = useState<IOption>({ label: 'Nerd', value: '' })
   const evaluators = playerOptions.filter(p => p.value !== nerd.value)
   const nerds = playerOptions.filter(p => p.value !== evaluator.value)
 
@@ -52,24 +57,24 @@ function App() {
   }
 
   return (
-    <div>
-      <Callout title="Welcome to the NerdMastery playtest">Create a set of evaluations for this session. When you are ready, click "Calculate Results" and see what happens!</Callout>
+    <div className="main">
+      <Callout intent={Intent.PRIMARY} icon={null} title="Welcome to the NerdMastery playtest">Create a set of evaluations for this session. When you are ready, click "Calculate Results" and see what happens!</Callout>
       <div className="section evaluate-form">
         <ControlGroup fill>
           <HTMLSelect
-            onChange={({ currentTarget: { value } }) => setEvaluator(value ? evaluators.find(e => e.value === value)! : { label: 'Select Evaluator', value: '' })}
+            onChange={({ currentTarget: { value } }) => setEvaluator(value ? evaluators.find(e => e.value === value)! : { label: 'Evaluator', value: '' })}
             value={evaluator.value}
-            options={[{ label: 'Select Evaluator', value: '' }, ...evaluators]}
+            options={[{ label: 'Evaluator', value: '' }, ...evaluators]}
           />
           <HTMLSelect
-            onChange={({ currentTarget: { value } }) => setNerd(value ? nerds.find(e => e.value === value)! : { label: 'Select Nerd', value: '' })}
+            onChange={({ currentTarget: { value } }) => setNerd(value ? nerds.find(e => e.value === value)! : { label: 'Nerd', value: '' })}
             value={nerd.value}
-            options={[{ label: 'Select Nerd', value: '' }, ...nerds]}
+            options={[{ label: 'Nerd', value: '' }, ...nerds]}
           />
           <HTMLSelect
             onChange={({ currentTarget: { value } }) => setTrait(value)}
             value={trait}
-            options={[{ label: 'Select Trait', value: '' }, ...traits]}
+            options={[{ label: 'Trait', value: '' }, ...traits]}
           />
           <Slider max={1} min={-1} stepSize={0.2} value={rating} onChange={(n: number) => setRating(n)} labelStepSize={0.2} />
         </ControlGroup>
@@ -90,12 +95,24 @@ function App() {
           <Card elevation={Elevation.ONE} className={'player'} key={player.id}>
             <h2>{player.name} <i>lvl: {player.level}</i></h2>
             {traits.map(t =>
-              <Card key={t}>
+              <Card key={t} className="trait">
                 <h3>{t}</h3>
-                <p><strong>Rating: </strong>{player.traits[t].rating}</p>
-                <p><strong>Rating Shift: </strong>{player.traits[t].ratingShift}</p>
-                <p><strong>Rating Deviation: </strong>{player.traits[t].rd}</p>
-                <p><strong>Volatility: </strong>{player.traits[t].volatility}</p>
+                <p>
+                  <strong>Rating</strong>
+                  <hr />
+                  {player.traits[t].rating}
+                  {formatShift(player.traits[t].ratingShift)}
+                </p>
+                <p>
+                  <strong>Rating Deviation</strong>
+                  <hr />
+                  {player.traits[t].rd}
+                </p>
+                <p>
+                  <strong>Volatility</strong>
+                  <hr />
+                  {player.traits[t].volatility}
+                </p>
               </Card>
             )}
           </Card>
